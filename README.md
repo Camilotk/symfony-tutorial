@@ -143,8 +143,8 @@ Ok, agora vamos editar nossa view para exibir os dados como antes, dentro de tem
 <h1>Hello {{ name }}!</h1>
 ```
 Agora acesse a página passando diferentes nomes:
-[http://localhost/\<nome do projeto\>/public/index.php/custom/Symfony](#)
-[http://localhost/\<nome do projeto\>/public/index.php/custom/PHP](#)
-[http://localhost/\<nome do projeto\>/public/index.php/custom/IFRS](#)
+- [http://localhost/\<nome do projeto\>/public/index.php/custom/Symfony](#)
+- [http://localhost/\<nome do projeto\>/public/index.php/custom/PHP](#)
+- [http://localhost/\<nome do projeto\>/public/index.php/custom/IFRS](#)
 
 ### ORM
