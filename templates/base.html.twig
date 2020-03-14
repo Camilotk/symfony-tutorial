@@ -1,12 +1,42 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<nav class="navbar  is-link" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{{ path('main') }}">
+            <img style="max-width: 30px;" src="https://i0.wp.com/phpmagazine.net/wp-content/uploads/2018/12/symfony-logo-png-transparent.png?fit=2400%2C2410"
+                 alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="112" height="28">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="{{ path('custom', {name: 'Symfony'}) }}">
+                    Greet Symfony
+                </a>
+                <a class="navbar-item" href="{{ path('custom', {name: 'PHP'}) }}">
+                    Greet PHP
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+<section class="section">
+    <div class="container">
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+    </div>
+</section>
+{% block javascripts %}{% endblock %}
+</body>
 </html>
