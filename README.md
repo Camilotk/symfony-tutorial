@@ -44,7 +44,7 @@ $ symfony new <nome_do_projeto>
 ```
 3. Acesse a URL http://localhost/nome_do_projeto/public/ e caso veja a página inicial do Symfony: _parabéns seu projeto foi iniciado e está funcionando_!
 
-![Página inicial do Symfony](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/home-page.png)
+![Página inicial do Symfony](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/welcome.png)
 
 4.  Agora é necessário importar/abrir o código que foi gerado dentro da pasta que contêm o seu projeto e como somos todos grandinhos e escolhemos nossas ferramentas deixo isso com você.
 ### Ferramenta make e o primeiro Controller
