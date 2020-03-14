@@ -14,10 +14,7 @@ class MainController extends AbstractController
      */
     public function index()
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/MainController.php',
-        ]);
+        return $this->render('home/index.html.twig');
     }
 
     /**
@@ -26,6 +23,6 @@ class MainController extends AbstractController
     public function custom(Request $request)
     {
         $name = $request->get('name');
-        return new Response('<h1>Olá ' . $name. '!</h1>');
+        return $this->render('home/custom.html.twig', compact('name'));
     }
 }
