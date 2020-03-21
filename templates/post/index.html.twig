@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listagem de posts{% endblock %}
+
+{% block body %}
+    <h1 class="title">Lista de Posts</h1>
+    <table class="table is-fullwidth is-hoverable">
+        <thead>
+        <tr>
+            <th><abbr title="Identification">ID</abbr></th>
+            <th>Title</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th><abbr title="Identification">ID</abbr></th>
+            <th>Title</th>
+        </tr>
+        </tfoot>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
