@@ -3,28 +3,46 @@
 {% block title %}Listagem de posts{% endblock %}
 
 {% block body %}
-    <h1 class="title">Lista de Posts</h1>
+    {% for message in app.flashes('success') %}
+         <div class="message is-success">
+             <div class="message-body">
+             {{ message }}
+             </div>
+         </div>
+    {% endfor %}
+    <h1 class="title">Post List</h1>
     <table class="table is-fullwidth is-hoverable">
         <thead>
         <tr>
             <th><abbr title="Identification">ID</abbr></th>
             <th>Title</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tfoot>
         <tr>
             <th><abbr title="Identification">ID</abbr></th>
             <th>Title</th>
+            <th>Actions</th>
         </tr>
         </tfoot>
         <tbody>
         {% for post in posts %}
             <tr>
                 <td>{{ post.id }}</td>
-                <td>{{ post.title }}</td>
+                <td>
+                    <a href="{{ path('post.show', {id: post.id}) }}">
+                        {{ post.title }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('post.delete', {id: post.id}) }}" class="has-text-danger">Delete</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
+    <div class="field">
+        <a href="{{ path('post.create') }}"><button class="button is-primary is-pulled-right">New Post</button></a>
+    </div>
 {% endblock %}
