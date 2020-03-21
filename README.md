@@ -501,9 +501,7 @@ Agora precisamos criar uma view que irá renderizar esse formulário. Para isso 
     {{ form(form) }}  
 {% endblock %}
 ```
-Legal, agora se acesarmos http://localhost/sftutorial/public/index.php/post/create veremos:
-![formulario novo post](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/fomulario-starter.png)
-Podemos notar que o Symfony criou o formulário mas nem adicionou o botão de enviar ou as classes corretas. Para adicionar o botao de enviar vamos voltar em PostType e alterar o método <u>buildForm</u> para: 
+Legal, agora se acesarmos http://localhost/sftutorial/public/index.php/post/create veremos que criou o formulário mas nem adicionou o botão de enviar ou as classes corretas. Para adicionar o botao de enviar vamos voltar em PostType e alterar o método <u>buildForm</u> para: 
 ```php
 public function buildForm(FormBuilderInterface $builder, array $options)  
 {  
@@ -514,7 +512,8 @@ public function buildForm(FormBuilderInterface $builder, array $options)
 }
 ```
 Existem inúmeros componentes que podem ser adicionados aos formulários. Para saber mais sobre cada um basta consultar a documentação nesse aspecto. Legal agora nosso formulário deve se parecer com isso:
-#image
+
+![formulario novo post](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/fomulario-starter.png)
 Certo, agora falta adicionar as classes do Bulma CSS para que fique estiloso para isso vamos adicionar um terceiro parametro em cada add com as propriedades que queremos que os elementos possuam:
 ```php
 public function buildForm(FormBuilderInterface $builder, array $options)  
@@ -653,7 +652,7 @@ Mas antes que possamos fazer login primeiro precisamos fazer a migração da ent
 ``` php bin/console doctrine:schema:update --force ```
 
 Legal agora se acessarmos nossa página http://localhost/sftutorial/public/index.php/login veremos que o Symfony já montou  uma tela de login básica para nós!
-#image
+![login symfony](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/login-basico.png)
 Porém se consultarmos através do MySQL a tabela User veremos que ela está vazia, ainda não temos nenhum usuário registrado o que nos impossibilita de fazer login. Como resolvemos isso? Simples, usamos o Symfony para que ele nos gere um controller para registro:
 ``` php bin/console make:controller RegistrationController ```
 Em src/Controller/RegistrationController.php vamos apagar o método index e adicionar um método register que irá utilizar o createFormBuilder para criar um formulário simples de registro e passar para a view registration/index.html.twig:
@@ -712,9 +711,9 @@ E agora precisamos renderizar isso na view, para isso altere o conteúdo de regi
 {% endblock %}
 ```
 E quando acessarmos a página http://localhost/sftutorial/public/index.php/register devemos ver:
-#image
+![registration page](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/registration-page.png)
 Agora se nos registrarmos seremos redirecionados para a página de login, mas se observarmos no nosso Banco MySQL veremos que nosso usuário está lá com sua senha criptografada pelo UserPasswordEncoderInterface que recebe Depedency Injection de uma classe concreta que faz o hash em Argon2 utilizando a biblioteca libsodium do PHP.
-
+![sql user](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/sql-user.png)
 Mas antes que possamos fazer login com nosso novo usuário precisamos ir em src/Security/CustomAuthenticator.php e alterar a linha que diz:
 ```php
 // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));  
@@ -725,7 +724,7 @@ por:
 return new RedirectResponse($this->urlGenerator->generate('post'));
 ```
 Essa linha diz para onde o usuário deve ser redirecionado após fazer o login, por padrão quando geramos a autenticação ela vem com TODO - a fazer - e lançando propositalmente uma exceção/erro justamente para que o usuário diga para o Symfony essa informação. Pronto! agora podemos fazer login e após o login ser concluido seremos redirecionados para a listagem de posts. Observe que na barra de debug onde dizia 'anon' agora diz o nome do usuário, isso significa que nosso login funcionou. Para deslogar basta acessar a página /logout e o usuário será deslogado e redirecionado para '/' por padrão.
-
+![user logged in bar](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/user-logged.png)
 Outra coisa que queremos fazer é dizer o que um usuário logado e/ou deslogado pode ou não ver, para isso devemos ir em config/packages/security.yaml e dizer quais rotas um usuário logado ou deslogado pode ver alterando os valores de access_control para:
 ```yaml
 # Easy way to control access for large sections of your site  
