@@ -155,7 +155,7 @@ Agora acesse a página passando diferentes nomes:
 ### Criando o template da página
 Digamos que quiséssemos adicionar o Bulma CSS CDN no projeto e que todas as páginas exibissem uma navbar. Para isso teríamos que criar um template que diversas páginas usariam, o que reduz drasticamente a quantidade de código que temos que escrever além de facilitar a manutenção do front-end. Dependendo a IDE que você escolheu pode ser que ela tenha criado um arquivo dentro da pasta templates chamado base.html.twig, caso não tenha crie. Iremos criar um template padrão e adicionar o link do CDN no head, o que deve ficar assim:
 
-```php
+```twig
 <!DOCTYPE html>  
 <html>  
 <head>  
@@ -198,7 +198,7 @@ Digamos que quiséssemos adicionar o Bulma CSS CDN no projeto e que todas as pá
 </html>
 ```
 Você deve ter notado os blocos {% %}, então, eles são as partes dinâmicas do nosso template, onde o conteúdo de cada página será inserido. No momento o que nos importa é o **body**.  Para dizermos qual template nossa página irá usar passamos a função **extends(** *String arquivo_template* **)** e em seguida as tags block com o conteúdo que queremos inserir em cada bloco.
-```php
+```twig
 {% extends('base.html.twig') %}  
 {% block title %} Meu primeiro Twig! {% endblock %}  
 {% block body %} <h1 class="title">Hello {{ name }}!</h1> {% endblock %}
@@ -324,7 +324,7 @@ Como podemos notar usamos um objeto PostRepository, esse objeto é criado junto 
  - findBy(): Que retorna um array  de objetos selecionados por determinada característica.
  - findOneBy(): Que retorna um objeto selecionado por determinada característica.
 Caso você esteja usando uma IDE que tenha um autocomplete minimamente decente ele irá mostrar esses e outros métodos do repositório com suas devidas assinaturas <strike>caso não estja, devia estar</strike>. Como vimos, depois de pegar todos os nossos posts estamos passando ele para a view index.html.twig dentro da pasta templates/posts/, essa view é automaticamente criada pelo comando make quando criamos um controller <u>após</u> termos instalado o twig no projeto, vamos alterar essa view para:
-```html
+```twig
 {% extends 'base.html.twig' %}  
   
 {% block title %}Listagem de posts{% endblock %}  
@@ -372,7 +372,7 @@ Certo, agora queremos exibir uma página com cada post, como fariamos isso? Vamo
  }
 ```
 E então devemos alterar o conteúdo do for em posts/index.html.twig para que tenha os links individuais de cada post:
-```html
+```twig
 {% for post in posts %}  
 <tr>  
  <td>{{ post.id }}</td>  
@@ -384,7 +384,7 @@ E então devemos alterar o conteúdo do for em posts/index.html.twig para que te
 {% endfor %}
  ```
  E então criarmos a página show.html.twig que irá mostrar o ID e o título do post:
- ```html
+ ```twig
  {% extends 'base.html.twig' %}  
   
 {% block title %} {{ post.title }}{% endblock %}  
@@ -397,3 +397,221 @@ Se tudo der certo a página de listagem de posts deve ficar assim:
 ![listagem com links](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/listagem-com-links.png)
 e ao clicar no post de ID 1 você verá:
 ![post](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/post.png)
+Agora vamos criar uma função para remover um post, para isso vamos voltar novamente ao controller e criar uma função chamada <u>remove()</u>:
+```php
+```/**  
+ * @Route("/post/delete/{id}", name="post.delete")  
+ * @param Request $request  
+  * @return Response  
+ */
+public function remove(PostRepository $repository, $id)  
+{  
+  $post = $repository->find($id);  
+  
+  // entity manager  
+  $em = $this->getDoctrine()->getManager();  
+  $em->remove($post); // remove
+  $em->flush();  
+  
+ return $this->redirect($this->generateUrl('post'));  
+}
+```
+Agora precisamos adicionar essa ação na nossa listagem para que o usuário possa deletar o post que ele quiser, para isso temos que alterar nossa tabela em post/index.html.twig para:
+```twig
+<table class="table is-fullwidth is-hoverable">  
+ <thead> <tr> <th><abbr title="Identification">ID</abbr></th>  
+ <th>Title</th>  
+ <th>Actions</th>  
+ </tr> </thead> <tfoot> <tr> <th><abbr title="Identification">ID</abbr></th>  
+ <th>Title</th>  
+ <th>Actions</th>  
+ </tr> </tfoot> <tbody>  {% for post in posts %}  
+        <tr>  
+ <td>{{ post.id }}</td>  
+ <td> <a href="{{ path('post.show', {id: post.id}) }}">  
+  {{ post.title }}  
+                <a href="{{ path('post.delete', {id: post.id}) }}" class="has-text-danger">Delete</a>
+ </td> </tr>  {% endfor %}  
+    </tbody>  
+</table>
+```
+Se tudo der certo a tabela deve-se parecer com essa:
+#imagem
+
+### Flash Message
+
+Você deve ter notado que quando clicamos em um link 'delete' a página simplemente dá refresh sem avisar nada ao usuário. Para adicionarmos uma mensagem temporária de que o post foi deletado com sucesso basta adicionarmos essa linha <u>antes do retorno</u> de remove() no PostController:
+```php
+$this->addFlash('success', 'O Post foi deletado');
+``` 
+E agora acima da nossa tabela de posts vamos adicionar:
+```twig
+{% for message in app.flashes('success') %}  
+ <div class="message is-success">  
+	 <div class="message-body">  
+		  {{ message }}  
+	 </div>  
+ </div>
+{% endfor %}
+```
+Que irá buscar na memória flash pelas mensagens com o nome 'success' e exibir acima da tabela sempre que alguém excluir um item e mostrar temporariamente para o usuário. Caso quisessemos fazer o mesmo com erro bastaria fazer outro for para erros e nele mudar todos os 'success' por 'danger'.
+### Formulários
+O Symfony tem várias formas de fazer formulários, vamos utilizar a mais simples: formulários auto-gerados a partir de uma entidade. Para isso precisamos primeiro instalar o criador de formulários:
+``` composer require form validator  ```
+Depois de ter esses pacotes instalados no projeto basta darmos o comando:
+``` php bin/console make:form ```
+E ele novamente irá fazer algumas perguntas:
+
+ - The name of the form class (e.g. FierceElephantType):
+ \> **PostType**
+ -  The name of Entity or fully qualified model class name that the new form will be bound to (empty for none):
+\> **Post**
+
+Esse comando irá criar uma nova classe em src/Form/PostType.php, esse formulário possui dois métodos <U>buildForm()</u> que é reponsavel por construir e renderizar os formulários com os elementos e propriedades corretos  e configureOptions que é utilizado para mudar configurações do formulário e no momento apenas possui um $resolver com o método setDefaults() que utiliza todas as configurações padrão exceto por data_class que diz qual entidade está ligada ao formulário.
+
+Agora precisamos mudar nossa função create() em PostController para ao invés de sempre criar um Post com o mesmo título e persistir mostar um formulário onde vamos preencher o título e então gravar no Banco de Dados. Para isso alteramos a função create para: 
+```php
+/**  
+ * @Route("/post/create", name="post.create")  
+ * @param Request $request  
+  * @return Response  
+ */
+public function create(Request $request)  
+{  
+  // cria um novo post com titulo  
+  $post = new Post();  
+  
+  // cria um novo formulário usando PostType de modelo que após preenchido  
+ // passa as informações para o objeto $post  $form = 
+  $this->createForm(PostType::class, $post);  
+  
+ // return a response  
+  return $this->render('post/create.html.twig', [  
+  'form' => $form->createView()  
+ ]);  
+}
+```
+Agora precisamos criar uma view que irá renderizar esse formulário. Para isso precisamos criar uma nova view em posts/ chamada create.html.twig conforme mandamos renderizar que será assim: 
+```twig
+{% extends 'base.html.twig' %}  
+  
+{% block title %} Novo Post {% endblock %}  
+  
+{% block body %}  
+    {{ form(form) }}  
+{% endblock %}
+```
+Legal, agora se acesarmos http://localhost/sftutorial/public/index.php/post/create veremos:
+#imagem
+Podemos notar que o Symfony criou o formulário mas nem adicionou o botão de enviar ou as classes corretas. Para adicionar o botao de enviar vamos voltar em PostType e alterar o método <u>buildForm</u> para: 
+```php
+public function buildForm(FormBuilderInterface $builder, array $options)  
+{  
+  $builder  
+  ->add('title')  
+  ->add('save', SubmitType::class)  
+  ;  
+}
+```
+Existem inúmeros componentes que podem ser adicionados aos formulários. Para saber mais sobre cada um basta consultar a documentação nesse aspecto. Legal agora nosso formulário deve se parecer com isso:
+#image
+Certo, agora falta adicionar as classes do Bulma CSS para que fique estiloso para isso vamos adicionar um terceiro parametro em cada add com as propriedades que queremos que os elementos possuam:
+```php
+public function buildForm(FormBuilderInterface $builder, array $options)  
+{  
+  $builder  
+  ->add('title', null, [   
+ 'attr' => [  
+  'class' => 'input'  
+  ],  
+  'row_attr' => [  
+  'class' => 'field'  
+  ]  
+ ]) ->add('save', SubmitType::class, [  
+  'attr' => [  
+  'class' => 'button is-primary'  
+  ]  
+ ])  ;  
+}
+```
+E após essa mudança se atualizarmos a página que tem o formulário para a criação de um novo post podemos ver que agora ela se parece assim:
+#imagem
+
+Agora se tentarmos salvar um novo post veremos que ele ainda não está gravando, para isso precisamos voltar ao controller e alterar para:
+```php
+/**  
+ * @Route("/post/create", name="post.create")  
+ * @param Request $request  
+  * @return Response  
+ */public function create(Request $request)  
+{  
+  // cria um novo post com titulo  
+  $post = new Post();  
+  
+  // cria um novo formulário usando PostType de modelo que após preenchido  
+ // passa as informações para o objeto $post  $form = $this->createForm(PostType::class, $post);  
+  
+  $form->handleRequest($request);  
+  
+ if($form->isSubmitted()) {  
+  // entity manager  
+  $em = $this->getDoctrine()->getManager();  
+  $em->persist($post); // salva o Objeto Post na tabela post  
+  $em->flush();  
+  
+  $this->addFlash('success', 'O post ' . $post->getTitle() . ' foi criado.' );  
+  
+ return $this->redirect($this->generateUrl('post'));  
+  }  
+  
+  // return a response  
+  return $this->render('post/create.html.twig', [  
+  'form' => $form->createView()  
+ ]);  
+}
+```
+O que fizemos aqui? Primeiro adicionamos a requisição em handleRequest() que é uma função que irá pegar todos os dados do formulário passados por post e adicionar no nosso objeto $post que foi passado antes ao formulário. Depois adicionamos um if que checa se esse método é chamado em caso de ser uma submissão do nosso formulário, caso seja ele grava o objeto post no Banco e depois redireciona para a lista de posts com uma flash message de sucesso.
+#imagem
+Certo agora vamos adicionar um botão para adicionar um novo post abaixo da nossa lista de posts para isso basta adicionar o seguinte código em template/post/index.html.twig abaixo da nossa tabela:
+```twig
+<div class="field">  
+ <a href="{{ path('post.create') }}"><button class="button is-primary is-pulled-right">New Post</button></a>  
+</div>
+```
+E com isso teremos:
+#imagem
+
+Uma última coisa que talvez queremos fazer com nosso formulário é **validação**, para isso devemos ir até a nossa entidade em src/Entity/Post.php, para que possamos adicionar validação de formulário precisamos primeiro importar a seguinte classe:
+```php
+use Symfony\Component\Validator\Constraints as Assert;
+```
+Então podemos por exemplo dizer que o título no formulário não pode ser enviado em branco, para isso adicionamos a annotation @Assert como importamos com NotNull na propriedade title:
+```php
+/**  
+ * @Assert\NotBlank
+ * @ORM\Column(type="string", length=255)  
+ */
+ private $title;
+ ```
+ Agora temos que adicionar a validação no método create do PostController e para isso é muito simples: basta adicionar a condição isValid() no if que checa quando o formulário foi enviado:
+ ```php
+ if($form->isSubmitted() && $form->isValid()) {  
+  // entity manager  
+  $em = $this->getDoctrine()->getManager();  
+  $em->persist($post); // salva o Objeto Post na tabela post  
+  $em->flush();  
+  
+  $this->addFlash('success', 'O post ' . $post->getTitle() . ' foi criado.' );  
+  
+  return $this->redirect($this->generateUrl('post'));  
+}
+ ```
+Pronto, agora se tentarmos enviar o formulário em branco veremos a mensagem 'Preencha este campo' enviada pelo navegador.
+
+### Debug
+Para podermos fazer o profilling e debug do nosso projeto em Symfony usamos um pacote PHP chamado php-debugbar alterado para Symfony que pode ser instalado utilizando o seguinte comando: 
+```composer require web-profiler-bundle```
+E então aparecerá essa barra que irá nos dar várias informações sobre o nosso projeto:
+#imagem
+
+ 
