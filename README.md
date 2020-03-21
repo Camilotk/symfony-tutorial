@@ -358,3 +358,42 @@ Caso você esteja usando uma IDE que tenha um autocomplete minimamente decente e
 Para repertimos a criação de posts podemos dar refresh na página /post/create que chama o método <u>create()</u> do nosso PostController e então acessarmos http://localhost/sftutorial/public/index.php/post onde veremos: 
 
 ![listagem de posts](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/tabela-posts.png)
+Certo, agora queremos exibir uma página com cada post, como fariamos isso? Vamos lá, primeiro devemos voltar à PostController e adicionar o método show que irá exibir cada página trazendo a informação do post:
+```php
+/**  
+ * @Route("/post/show/{id}", name="post.show")  
+ * @param Request $request  
+  * @return Response  
+ */
+ public function show(PostRepository $repository, $id)  
+ {  
+  $post = $repository->find($id);  
+  return $this->render('post/show.html.twig', [ 'post' => $post]);  
+ }
+```
+E então devemos alterar o conteúdo do for em posts/index.html.twig para que tenha os links individuais de cada post:
+```html
+{% for post in posts %}  
+<tr>  
+ <td>{{ post.id }}</td>  
+ <td> <a href="{{ path('post.show', {id: post.id}) }}">  
+  {{ post.title }}  
+            </a>  
+ </td> 
+</tr>
+{% endfor %}
+ ```
+ E então criarmos a página show.html.twig que irá mostrar o ID e o título do post:
+ ```html
+ {% extends 'base.html.twig' %}  
+  
+{% block title %} {{ post.title }}{% endblock %}  
+  
+{% block body %}  
+    <h1 class="title">ID: {{ post.id }} Titulo: {{ post.title }}</h1>  
+{% endblock %}
+```
+Se tudo der certo a página de listagem de posts deve ficar assim:
+![listagem com links](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/listagem-com-links.png)
+e ao clicar no post de ID 1 você verá:
+![post](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/post.png)
