@@ -436,7 +436,7 @@ Agora precisamos adicionar essa ação na nossa listagem para que o usuário pos
 </table>
 ```
 Se tudo der certo a tabela deve-se parecer com essa:
-#imagem
+![listagem com delete](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/delete.png)
 
 ### Flash Message
 
@@ -502,7 +502,7 @@ Agora precisamos criar uma view que irá renderizar esse formulário. Para isso 
 {% endblock %}
 ```
 Legal, agora se acesarmos http://localhost/sftutorial/public/index.php/post/create veremos:
-#imagem
+![formulario novo post](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/fomulario-starter.png)
 Podemos notar que o Symfony criou o formulário mas nem adicionou o botão de enviar ou as classes corretas. Para adicionar o botao de enviar vamos voltar em PostType e alterar o método <u>buildForm</u> para: 
 ```php
 public function buildForm(FormBuilderInterface $builder, array $options)  
@@ -535,7 +535,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
 }
 ```
 E após essa mudança se atualizarmos a página que tem o formulário para a criação de um novo post podemos ver que agora ela se parece assim:
-#imagem
+![formulario-com-bulma](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/form-bulma.png)
 
 Agora se tentarmos salvar um novo post veremos que ele ainda não está gravando, para isso precisamos voltar ao controller e alterar para:
 ```php
@@ -571,7 +571,7 @@ Agora se tentarmos salvar um novo post veremos que ele ainda não está gravando
 }
 ```
 O que fizemos aqui? Primeiro adicionamos a requisição em handleRequest() que é uma função que irá pegar todos os dados do formulário passados por post e adicionar no nosso objeto $post que foi passado antes ao formulário. Depois adicionamos um if que checa se esse método é chamado em caso de ser uma submissão do nosso formulário, caso seja ele grava o objeto post no Banco e depois redireciona para a lista de posts com uma flash message de sucesso.
-#imagem
+![novo-post](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/novo-post.png)
 Certo agora vamos adicionar um botão para adicionar um novo post abaixo da nossa lista de posts para isso basta adicionar o seguinte código em template/post/index.html.twig abaixo da nossa tabela:
 ```twig
 <div class="field">  
@@ -579,7 +579,7 @@ Certo agora vamos adicionar um botão para adicionar um novo post abaixo da noss
 </div>
 ```
 E com isso teremos:
-#imagem
+![botao novo post](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/tela-com-botao.png)
 
 Uma última coisa que talvez queremos fazer com nosso formulário é **validação**, para isso devemos ir até a nossa entidade em src/Entity/Post.php, para que possamos adicionar validação de formulário precisamos primeiro importar a seguinte classe:
 ```php
@@ -612,6 +612,4 @@ Pronto, agora se tentarmos enviar o formulário em branco veremos a mensagem 'Pr
 Para podermos fazer o profilling e debug do nosso projeto em Symfony usamos um pacote PHP chamado php-debugbar alterado para Symfony que pode ser instalado utilizando o seguinte comando: 
 ```composer require web-profiler-bundle```
 E então aparecerá essa barra que irá nos dar várias informações sobre o nosso projeto:
-#imagem
-
- 
+![php debuggbar no symfony](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/debugbar.png)
