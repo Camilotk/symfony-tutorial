@@ -23,7 +23,9 @@ Ainda segundo o site  [EtonDigital](https://www.etondigital.com/popular-symfony-
   
 ## Tutorial  
 Para mostrar e exemplificar o funcionamento do framework foi elaborado um pequeno tutorial de uma _toy application_ de um microblog de imagens.
+
 ![main page](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/main-page.png)
+
 ### Índice  
 
  1. [Requisitos Minimos/Instalação](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/tutorial/INSTALACAO.md)
@@ -42,3 +44,6 @@ Para mostrar e exemplificar o funcionamento do framework foi elaborado um pequen
  14. [Relação entre tabelas, parte 2](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/tutorial/RELACOES-2.md)
  15. [Services](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/tutorial/SERVICES.md)
  16. [Toques Finais](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/tutorial/TOQUES.md)
+ 
+ <hr>
+ **Obs**: Por motivos de diferença de leitura de fim de linha do editor de código para o de markdown alguns códigos ficarão mal identados, para resolver isso use a extensão beatify do VS Code ou CTRL+ALT+L no PHP Storm.
