@@ -23,7 +23,7 @@ Ainda segundo o site  [EtonDigital](https://www.etondigital.com/popular-symfony-
   
 ## Tutorial  
 Para mostrar e exemplificar o funcionamento do framework foi elaborado um pequeno tutorial de uma _toy application_ de um microblog de imagens.
-
+![main page](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/main-page.png)
 ### Índice  
 
  1. [Requisitos Minimos/Instalação](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/tutorial/INSTALACAO.md)
