@@ -1,3 +1,30 @@
 {% extends('base.html.twig') %}
 {% block title %} Home {% endblock %}
-{% block body %} <h1 class="title">Home</h1> {% endblock %}
+{% block body %}
+    <div class="content is-large">
+        <h1>Meu Blog</h1>
+        <p>Microblog com minhas imagens e fotos preferidas</p>
+    </div>
+
+    <div class="columns is-multiline">
+        {% for post in posts %}
+        <div class="column is-one-quarter-desktop is-half-tablet">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image is-3by2">
+                        <img src="{{ '/sftutorial/public/uploads/' ~ post.image  }}" alt="">
+                    </figure>
+                    <div class="card-content is-overlay is-clipped">
+              <span class="tag is-info">
+                {{post.category}}
+              </span>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    {{ post.title }}
+                </footer>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

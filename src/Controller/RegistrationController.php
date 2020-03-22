@@ -23,14 +23,51 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $form = $this->createFormBuilder()
-            ->add('username')
+            ->add('username', null, [
+                'attr' => [
+                    'class' => 'input is-primary'
+                ],
+                'row_attr' => [
+                    'class' => 'field'
+                ],
+                'label_attr' => [
+                    'class' => 'label'
+                ]
+            ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password']
+                'first_options' => [
+                    'label' => 'Password',
+                    'attr' => [
+                        'class' => 'input is-primary'
+                    ],
+                    'row_attr' => [
+                        'class' => 'field'
+                    ],
+                    'label_attr' => [
+                        'class' => 'label'
+                    ]
+                ],
+                'second_options' => [
+                    'label' => 'Repeat Password',
+                    'attr' => [
+                        'class' => 'input is-primary'
+                    ],
+                    'row_attr' => [
+                        'class' => 'field'
+                    ],
+                    'label_attr' => [
+                        'class' => 'label'
+                    ]
+                ],
+
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'attr' => [
+                    'class' => 'button is-primary'
+                ]
+            ])
             ->getForm()
         ;
 
