@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File;
 
 class PostController extends AbstractController
 {
@@ -43,9 +44,22 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $file = $request->files->get('post')['image'];
             // entity manager
             $em = $this->getDoctrine()->getManager();
-            $em->persist($post); // salva o Objeto Post na tabela post
+            $em->persist($post);
+            if ($file) {
+                // cria um nome único para cada imagem
+                // isso evita conflitos caso 2 tenham mesmo nome
+                $filename = md5(uniqid()) . '.' . $file->guessClientExtension();
+
+                // move as imagens, pega o valor de uploads_dir em services.yaml
+                // e renomeia o arquivo com o valor em $filename
+                $file->move($this->getParameter('uploads_dir'), $filename);
+
+                // adiciona o caminho ao post para que seja persistido
+                $post->setImage($filename);
+            }
             $em->flush();
 
             $this->addFlash('success', 'O post ' . $post->getTitle() . ' foi criado.' );
