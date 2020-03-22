@@ -1,6 +1,9 @@
 # Symfony
 ![](https://symfony.com/images/opengraph/symfony.png)
 
+**ALUNO**: Camilo Cunha de Azevedo<br>
+**Obs**: Melhor que ler em PDF é ler no GitHub de forma mais organizada. O repositório original é https://github.com/Camilotk/symfony-sisint-ifrs provavelmente esse é o tutorial mais atualizado e completo disponível gratuitamente de Symfony se for útil dar estrelinha não cai o dedo, prometo.
+
 ### O que é o Framework Symfony?
 Symfony é um framework - conjunto de bibliotecas e ferramentas - em PHP para a criação de aplicações de alta performance e de fácil manutenção. É altamente inspirado pelo projeto Spring da comunidade Java e nasceu inicialmente direcionado à produzir sistemas de qualidade para o mundo enterprise em PHP oferecendo soluções modulares com o máximo de reaproveitamento de código.
 
