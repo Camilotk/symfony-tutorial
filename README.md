@@ -46,4 +46,4 @@ Para mostrar e exemplificar o funcionamento do framework foi elaborado um pequen
  16. [Toques Finais](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/tutorial/TOQUES.md)
  
  <hr>
- **Obs**: Por motivos de diferença de leitura de fim de linha do editor de código para o de markdown alguns códigos ficarão mal identados, para resolver isso use a extensão beatify do VS Code ou CTRL+ALT+L no PHP Storm.
+ __Obs__: Por motivos de diferença de leitura de fim de linha do editor de código para o de markdown alguns códigos ficarão mal identados, para resolver isso use a extensão beatify do VS Code ou CTRL+ALT+L no PHP Storm.
