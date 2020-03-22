@@ -985,7 +985,7 @@ $builder
  ]);
 ```
 Certo, agora temos que inserir algumas categorias no banco, para isso você pode usar o gerenciador MySQL de sua preferência - phpMyAdmin, Adminer, Navicat, DBeaver... - eu vou utilizar o integrado na IDE por ser mais prático:
-#image
+![insert sql](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/sql.png)
 Após inserirmos se tentarmos acessar a página veremos que ela retorna um erro que diz que o objeto não pode ser convertido para string, para que isso seja possivel precisamos implementar um método mágico __toString() na classe Category:
 ``` php
 public function __toString()  
@@ -994,7 +994,7 @@ public function __toString()
 }
 ```
 Legal, agora tudo deve estar funcionando. A nova tela de cadastro se parecera com esta:
-#image
+![formulario novo](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/formulario-novo-bulma.png)
 Agora queremos que a categoria apareça na página que exibe as informações do post, para isso vamos alterar o template /post/show.html.twig:
 ```twig
 {% extends 'base.html.twig' %}  
@@ -1008,4 +1008,4 @@ Agora queremos que a categoria apareça na página que exibe as informações do
 {% endblock %}
 ```
 Agora quando acessamos um post ele deve parecer-se com isso:
-#image
+![post com categoria](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/post-com-categoria.png)
