@@ -4,5 +4,7 @@
 
 {% block body %}
     <h1 class="title">ID: {{ post.id }} Titulo: {{ post.title }}</h1>
+    <em>{{ post.category }}</em>
+    <hr>
     <img src="{{ '/sftutorial/public/uploads/' ~ post.image }}">
 {% endblock %}

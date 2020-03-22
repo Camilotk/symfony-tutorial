@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Post;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,7 +18,7 @@ class PostType extends AbstractType
         $builder
             ->add('title', null, [
                 'attr' => [
-                    'class' => 'input'
+                    'class' => 'input is-primary'
                 ],
                 'row_attr' => [
                     'class' => 'field'
@@ -33,6 +35,14 @@ class PostType extends AbstractType
                 'label_attr' => [
                     'class' => 'label'
                 ]
+            ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'label' => false,
+                'row_attr' => [
+                    'class' => 'field select is-rounded is-primary'
+                ],
+
             ])
             ->add('save', SubmitType::class, [
                 'attr' => [
