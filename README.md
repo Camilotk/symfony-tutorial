@@ -41,3 +41,4 @@ Para mostrar e exemplificar o funcionamento do framework foi elaborado um pequen
  13. [Upload de arquivos](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/tutorial/ARQUIVOS.md)
  14. [Relação entre tabelas, parte 2](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/tutorial/RELACOES-2.md)
  15. [Services](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/tutorial/SERVICES.md)
+ 16. [Toques Finais](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/tutorial/TOQUES.md)
