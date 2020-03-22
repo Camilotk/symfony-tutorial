@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use App\Service\Uploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +33,7 @@ class PostController extends AbstractController
      * @param  Request $request
      * @return Response
      */
-    public function create(Request $request)
+    public function create(Request $request, Uploader $uploader)
     {
         // cria um novo post com titulo
         $post = new Post();
@@ -49,13 +50,7 @@ class PostController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             if ($file) {
-                // cria um nome único para cada imagem
-                // isso evita conflitos caso 2 tenham mesmo nome
-                $filename = md5(uniqid()) . '.' . $file->guessClientExtension();
-
-                // move as imagens, pega o valor de uploads_dir em services.yaml
-                // e renomeia o arquivo com o valor em $filename
-                $file->move($this->getParameter('uploads_dir'), $filename);
+                $filename = $uploader->uploadFile($file);
 
                 // adiciona o caminho ao post para que seja persistido
                 $post->setImage($filename);
