@@ -40,7 +40,7 @@ Primeiro vamos alterar templates/home/index.html.twig para que exiba todos nosso
 }
 ```
 Certo, se você tentar acessar http://localhost/sftutorial/public/index.php/main logado deve ver:
-#image
+![main page](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/main-page.png)
 
 Agora vamos deixar essa rota disponível para usuários visitantes em config/packages/security.yaml altere access_control para:
 ```yaml
@@ -100,7 +100,7 @@ Agora que temos nossa linda main page vamos também estilizar nossas telas de lo
  </div> </div> </form>{% endblock %}
 ```
 Que deve deixar a página com essa aparência:
-#image
+![login](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/login.png)
 
 Agora precisamos alterar src/Controller/RegistrationController.php alterando a variavel $form para:
 ```php
@@ -152,4 +152,5 @@ $form = $this->createFormBuilder()
 ;
 ```
 Que deve deixar a tela de registro com essa aparência:
-#image
+![register](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/register.png)
+
