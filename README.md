@@ -841,7 +841,7 @@ $builder
 Note que adicionamos 'mapped' como falso, isso siginifica que esse campo não será automaticamente persistido e terá que ser tratado no controller, a documentação do symfony diz que isso é necessário caso quisermos salvar o arquivo em alguma pasta que não a temporária. 
 
 Atualmente nossa tela de novo post deve estar assim:
-#image
+![formulario com o campo de imagem](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/formulario-com-imagem.png)
 
 Ok, como disse antes, agora teremos que tratar o arquivo no controller. Para isso teremos que alterar a função create em PostController
 ```php
@@ -899,7 +899,7 @@ parameters:
  Agora precisamos migrar nossos novos campos para o BD para que possa recebe-los:
  ``` php bin/console doctrine:schema:update --force```
 Após migrarmos os dados podemos enviar nosso arquivo que será salvo dentro de public/uploads/ e persistido.
-#image
+![imagem salva](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/upload-feito.png)
 Estamos quase prontos, para finalizarmos o upload de arquivos devemos também exibir a imagem salva quando acessarmos um de nossos posts. Para isso temos que ir no nosso template /post/show.html.twig e adicionar a imagem:
 ```twig
 {% extends 'base.html.twig' %}  
@@ -914,5 +914,5 @@ Estamos quase prontos, para finalizarmos o upload de arquivos devemos também ex
 **Obs:** O caminho '/sftutorial/public/uploads/' é para quem está usando apache sem virtualhost, para quem está usando htacess, emdded server do php ou symfony ou com o virtualhost configurado o caminho é '/uploads/' apenas.
 
 Se tudo deu certo você deve estar vendo seus novos posts com imagens, parabéns!
-#image
+![post com imagem](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/post-com-imagem.png)
 ### Relações de tabelas usando Doctrine, parte 2
