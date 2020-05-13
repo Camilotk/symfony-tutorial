@@ -47,4 +47,4 @@ Para mostrar e exemplificar o funcionamento do framework foi elaborado um pequen
  
  <hr>
  
- __Obs__: Por motivos de diferença de leitura de fim de linha do editor de código para o de markdown alguns códigos ficarão mal identados, para resolver isso use a extensão beatify do VS Code ou CTRL+ALT+L no PHP Storm.
+ __Obs__: Por motivos de diferença de leitura de fim de linha do editor de código para o de markdown alguns códigos ficarão mal identados, para resolver isso use a extensão beautify do VS Code ou CTRL+ALT+L no PHP Storm.
