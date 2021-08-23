@@ -5,7 +5,7 @@ Após termos instalado o Twig devemos criar uma pasta com o nome 'templates' den
 
 ![Estrutura de pastas](https://github.com/Camilotk/symfony-sisint-ifrs/blob/master/imagens/folders.png)
 
-Devemos refatorar nosso código custom mudando o retorno que agora não vai ser mais o retorno, mas a função render() herdada de AbstractController que recebe o nome ou caminho do arquivo que será renderizado de dentro da pasta 'templates'.  Além disso, precisamos passar a todas as variáveis que a View precisa dentro de um array em que a chave será o nome da variável na view e o valor a variável no controller.
+Devemos refatorar nosso código custom mudando o retorno que agora não vai ser mais o retorno json, mas a função render() herdada de AbstractController que recebe o nome ou caminho do arquivo que será renderizado de dentro da pasta 'templates'.  Além disso, precisamos passar a todas as variáveis que a View precisa dentro de um array em que a chave será o nome da variável na view e o valor a variável no controller.
 ```php
 /**  
  * @Route("/custom/{name?}", name="custom")  
